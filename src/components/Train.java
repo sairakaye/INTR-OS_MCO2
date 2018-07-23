@@ -1,10 +1,16 @@
 package components;
 import java.util.ArrayList;
 
-public class Train /* extends Thread implements Runnable */{
+public class Train implements Runnable {
     private static int id;
     private int capacity;
     private ArrayList<Robot> passengers;
+
+
+    @Override
+    public void run() {
+
+    }
 
     public static int getId() {
         return id;
