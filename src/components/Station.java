@@ -1,5 +1,8 @@
 package components;
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Station {
     private int id;
@@ -7,6 +10,8 @@ public class Station {
     private ArrayList<Thread> robotsThreads;
     private boolean trainWaiting; // train waiting in station
     private Train trainOnStation;
+    private Lock lockStation;
+    private Condition condStation;
 
     public Station(int id){
         this.id = id;
@@ -55,5 +60,33 @@ public class Station {
 
     public boolean getTrainWaiting(){
         return trainWaiting;
+    }
+
+    public void lock_init(){
+        lockStation = new ReentrantLock();
+    }
+
+    public void lock_acquire(){
+
+    }
+
+    public void lock_release(){
+
+    }
+
+    public void cond_init(){
+
+    }
+
+    public void cond_wait(){
+
+    }
+
+    public void cond_signal(){
+
+    }
+
+    public void cond_broadcast(){
+
     }
 }
