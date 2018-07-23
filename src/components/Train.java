@@ -6,6 +6,10 @@ public class Train implements Runnable {
     private int capacity;
     private ArrayList<Robot> passengers;
 
+    public Train(int capacity){
+        id++;
+        this.capacity = capacity;
+    }
 
     @Override
     public void run() {
