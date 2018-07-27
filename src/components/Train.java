@@ -5,6 +5,8 @@ public class Train implements Runnable {
     private static int id;
     private int capacity;
     private ArrayList<Robot> passengers;
+    private boolean status; //running or waiting
+    private Station curStation;
 
     public Train(int capacity){
         id++;
@@ -30,6 +32,10 @@ public class Train implements Runnable {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public int getNumberOfPassengers(){
+        return passengers.size();
     }
 
     public void loadPassengers(){
