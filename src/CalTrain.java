@@ -9,7 +9,7 @@ public class CalTrain extends Application{
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("index.fxml"));
         primaryStage.setTitle("INTR-OS MCO2");
-        primaryStage.setScene(new Scene(root, 1079, 779));
+        primaryStage.setScene(new Scene(root, 1461, 800));
         primaryStage.show();
     }
 
