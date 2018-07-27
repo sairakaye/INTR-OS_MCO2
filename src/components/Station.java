@@ -18,7 +18,6 @@ public class Station {
         trainWaiting = false;
         waitingList = new ArrayList<>();
         robotsThreads = new ArrayList<>();
-
     }
 
     public void station_load_train(int count) {
@@ -26,7 +25,18 @@ public class Station {
     }
 
     public void station_wait_for_train() {
+        // check for mutex?
 
+        // while station trainWaiting is false, do nothing.
+        // while (!trainWaiting);
+
+        int availableSlots = trainOnStation.getCapacity() - trainOnStation.getNumberOfPassengers();
+
+        // if mas konti yung naghihintay kesa sa availableSlots,
+        if (waitingList.size() <= availableSlots)
+            station_load_train(waitingList.size());
+        else
+            station_load_train(availableSlots);
     }
 
     public void station_on_board(Robot passenger){
