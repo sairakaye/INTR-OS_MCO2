@@ -2,15 +2,18 @@ package components;
 import java.util.ArrayList;
 
 public class Train implements Runnable {
-    private static int id;
+    private int id;
     private int capacity;
+    private static int numTrains;
     private ArrayList<Robot> passengers;
-    private boolean status; //running or waiting
+    private boolean running; //running or waiting
     private Station curStation;
 
     public Train(int capacity){
-        id++;
+        numTrains++;
+        this.id = numTrains;
         this.capacity = capacity;
+        running = true;
     }
 
     @Override
@@ -18,12 +21,12 @@ public class Train implements Runnable {
 
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
-    public static void setId(int id) {
-        Train.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getCapacity() {
@@ -34,15 +37,29 @@ public class Train implements Runnable {
         this.capacity = capacity;
     }
 
+    public ArrayList<Robot> getPassengers(){
+        return passengers;
+    }
+
     public int getNumberOfPassengers(){
         return passengers.size();
     }
 
-    public void loadPassengers(){
-
+    public void loadTrain(Robot passenger){
+        if (!isFull())
+            passengers.add(passenger);
     }
 
-    public void unloadPassengers(){
+    public void unloadTrain(){
+        for (int i = 0; i < passengers.size(); i++){
+            if (passengers.get(i).getDepartureStation().getId() == curStation.getId()) {
+                passengers.remove(i);
+                passengers.trimToSize();
+            }
+        }
+    }
 
+    public boolean isFull(){
+        return capacity == passengers.size();
     }
 }
