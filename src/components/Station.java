@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Station {
     private int id;
     private ArrayList<Robot> waitingList;
-    private ArrayList<Thread> robotsThreads;
+    // private ArrayList<Thread> robotsThreads;
     private boolean trainWaiting; // train waiting in station
     private Train trainOnStation;
     private Lock lockStation;
@@ -17,7 +17,7 @@ public class Station {
         this.id = id;
         trainWaiting = false;
         waitingList = new ArrayList<>();
-        robotsThreads = new ArrayList<>();
+       // robotsThreads = new ArrayList<>();
     }
 
     public void station_load_train(Robot pass) {
