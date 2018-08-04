@@ -1,28 +1,28 @@
 package components;
 
 public class Robot implements Runnable {
-    private static int id = 0;
-    private int arrivalStation; //which station passenger rode
-    private int departureStation; //which station passenger is going to
+    private int id = 0;
+    private static int totalRobots;
+    private Station arrivalStation; // which station passenger rode
+    private Station departureStation; // which station passenger is going to
     private volatile boolean isOnTrain;
     private Station currentStation;
     private Thread t;
 
-    public Robot(Station currentStation, int id, int arrivalStation, int departureStation) {
+    public Robot(Station currentStation, Station arrivalStation, Station departureStation) {
         this.arrivalStation = arrivalStation;
         this.departureStation = departureStation;
         this.currentStation = currentStation;
-        this.id = id;
+        totalRobots++;
+        this.id = totalRobots;
         isOnTrain = false;
         t = new Thread(this);
-
-        id++;
-
     }
 
     // For testing purposes.
-    public Robot() {
+    public Robot(int id) {
         t = new Thread(this);
+        this.id = id;
     }
 
     @Override
@@ -38,27 +38,27 @@ public class Robot implements Runnable {
         t.start();
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
-    public static void setId(int id) {
-        Robot.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getArrivalStation() {
+    public Station getArrivalStation() {
         return arrivalStation;
     }
 
-    public void setArrivalStation(int arrivalStation) {
+    public void setArrivalStation(Station arrivalStation) {
         this.arrivalStation = arrivalStation;
     }
 
-    public int getDepartureStation() {
+    public Station getDepartureStation() {
         return departureStation;
     }
 
-    public void setDepartureStation(int departureStation) {
+    public void setDepartureStation(Station departureStation) {
         this.departureStation = departureStation;
     }
 
@@ -69,5 +69,4 @@ public class Robot implements Runnable {
     public void setIsOnTrain(boolean isOnTrain) {
         this.isOnTrain = isOnTrain;
     }
-
 }

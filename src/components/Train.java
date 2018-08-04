@@ -2,28 +2,64 @@ package components;
 import java.util.ArrayList;
 
 public class Train implements Runnable {
-    private static int id;
+    private int id;
     private int capacity;
+    private static int numTrains;
     private ArrayList<Robot> passengers;
-    private boolean status; //running or waiting
+    private ArrayList<Station> stations; //temp
+    private boolean isRunning; //running or waiting
     private Station curStation;
+    private Thread t;
 
     public Train(int capacity){
-        id++;
+
+        // Testing
+        ArrayList<Station> stations = new ArrayList<>();
+
+        stations.add(new Station(0));
+        stations.add(new Station(1));
+        stations.add(new Station(2));
+
+        numTrains++;
+        this.id = numTrains;
         this.capacity = capacity;
+        isRunning = true;
+
+        t = new Thread(this);
     }
 
     @Override
     public void run() {
+        int count = 0;
+
+        System.out.println("The train is running....");
+
+        while (isRunning) {
+            try {
+                t.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            if (count < 3) {
+                curStation = stations.get(count);
+                count++;
+            } else {
+                curStation = stations.get(0);
+                count = 0;
+            }
+
+            System.out.println("The train " + id + "is at " + curStation.getId() + "...");
+        }
 
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
-    public static void setId(int id) {
-        Train.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getCapacity() {
@@ -34,15 +70,29 @@ public class Train implements Runnable {
         this.capacity = capacity;
     }
 
+    public ArrayList<Robot> getPassengers(){
+        return passengers;
+    }
+
     public int getNumberOfPassengers(){
         return passengers.size();
     }
 
-    public void loadPassengers(){
-
+    public void loadTrain(Robot passenger){
+        if (!isFull())
+            passengers.add(passenger);
     }
 
-    public void unloadPassengers(){
+    public void unloadTrain(){
+        for (int i = 0; i < passengers.size(); i++){
+            if (passengers.get(i).getDepartureStation().getId() == curStation.getId()) {
+                passengers.remove(i);
+                passengers.trimToSize();
+            }
+        }
+    }
 
+    public boolean isFull(){
+        return capacity == passengers.size();
     }
 }
