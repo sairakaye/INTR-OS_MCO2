@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1461.0" style="-fx-background-color: #3E454D;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CalTrainController">
+<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1461.0" style="-fx-background-color: #3E454D;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CalTrainController">
    <children>
-      <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="261.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="300.0" fitWidth="300.0" layoutX="261.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/s1.jpg" />
          </image>
@@ -111,22 +111,22 @@
             <Font name="Avenir 85 Heavy" size="26.0" />
          </font>
       </Label>
-      <Label layoutX="861.0" layoutY="14.0" text="5" textFill="WHITE">
+      <Label layoutX="869.0" layoutY="14.0" text="5" textFill="WHITE">
          <font>
             <Font name="Avenir 85 Heavy" size="26.0" />
          </font>
       </Label>
-      <Label layoutX="861.0" layoutY="200.0" text="6" textFill="WHITE">
+      <Label layoutX="869.0" layoutY="200.0" text="6" textFill="WHITE">
          <font>
             <Font name="Avenir 85 Heavy" size="26.0" />
          </font>
       </Label>
-      <Label layoutX="861.0" layoutY="400.0" text="7" textFill="WHITE">
+      <Label layoutX="869.0" layoutY="400.0" text="7" textFill="WHITE">
          <font>
             <Font name="Avenir 85 Heavy" size="26.0" />
          </font>
       </Label>
-      <Label layoutX="861.0" layoutY="600.0" text="8" textFill="WHITE">
+      <Label layoutX="869.0" layoutY="600.0" text="8" textFill="WHITE">
          <font>
             <Font name="Avenir 85 Heavy" size="26.0" />
          </font>
@@ -136,72 +136,64 @@
             <Font name="UniSansHeavyCAPS" size="30.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="14.0" layoutY="70.0" prefHeight="246.0" prefWidth="222.0" style="-fx-background-color: #8FCFDA;">
+      <AnchorPane layoutX="14.0" layoutY="70.0" prefHeight="172.0" prefWidth="222.0" style="-fx-background-color: #8FCFDA;">
          <children>
             <Label layoutX="10.0" layoutY="4.0" text="TRAIN OPTIONS">
                <font>
                   <Font name="Avenir 85 Heavy" size="14.0" />
                </font></Label>
-            <Label layoutX="10.0" layoutY="71.0" text="Train ID">
+            <Label layoutX="15.0" layoutY="45.0" text="Train">
                <font>
                   <Font name="UniSansHeavyCAPS" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="14.0" layoutY="132.0" text="Train">
-               <font>
-                  <Font name="UniSansHeavyCAPS" size="14.0" />
-               </font>
-            </Label>
-            <Button layoutX="13.0" layoutY="201.0" mnemonicParsing="false" style="-fx-background-color: #3E454D;" text="Deploy Train" textFill="WHITE">
+            <Button layoutX="14.0" layoutY="114.0" mnemonicParsing="false" onAction="#deployTrain" style="-fx-background-color: #3E454D;" text="Deploy Train" textFill="WHITE">
                <font>
                   <Font name="Avenir 85 Heavy" size="14.0" />
                </font>
             </Button>
-            <TextArea layoutX="111.0" layoutY="61.0" prefHeight="26.0" prefWidth="98.0" />
-            <TextArea layoutX="108.0" layoutY="122.0" prefHeight="38.0" prefWidth="98.0" />
-            <Label layoutX="18.0" layoutY="151.0" text="CAPACITY">
+            <TextArea layoutX="109.0" layoutY="35.0" prefHeight="38.0" prefWidth="98.0" />
+            <Label layoutX="19.0" layoutY="64.0" text="CAPACITY">
                <font>
                   <Font name="UniSansHeavyCAPS" size="14.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="14.0" layoutY="353.0" prefHeight="330.0" prefWidth="222.0" style="-fx-background-color: #dc654d;">
+      <AnchorPane layoutX="14.0" layoutY="257.0" prefHeight="246.0" prefWidth="222.0" style="-fx-background-color: #dc654d;">
          <children>
             <Label layoutX="10.0" layoutY="4.0" text="PASSENGER OPTIONS" textFill="WHITE">
                <font>
                   <Font name="Avenir 85 Heavy" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="71.0" text="PASSENGER" textFill="WHITE">
+            <Label layoutX="17.0" layoutY="43.0" text="STATION FROM" textFill="WHITE">
                <font>
                   <Font name="UniSansHeavyCAPS" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="13.0" layoutY="138.0" text="STATION FROM" textFill="WHITE">
-               <font>
-                  <Font name="UniSansHeavyCAPS" size="14.0" />
-               </font>
-            </Label>
-            <Button layoutX="10.0" layoutY="286.0" mnemonicParsing="false" style="-fx-background-color: #3E454D;" text="Spawn Passengers" textFill="WHITE">
+            <Button layoutX="14.0" layoutY="191.0" mnemonicParsing="false" onAction="#spawnPassenger" style="-fx-background-color: #3E454D;" text="Spawn Passenger" textFill="WHITE">
                <font>
                   <Font name="Avenir 85 Heavy" size="14.0" />
                </font>
             </Button>
-            <TextArea layoutX="111.0" layoutY="70.0" prefHeight="26.0" prefWidth="98.0" />
-            <Label layoutX="18.0" layoutY="90.0" text="ID" textFill="WHITE">
+            <Label layoutX="14.0" layoutY="120.0" text="STATION TO" textFill="WHITE">
                <font>
                   <Font name="UniSansHeavyCAPS" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="215.0" text="STATION TO" textFill="WHITE">
-               <font>
-                  <Font name="UniSansHeavyCAPS" size="14.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="stationFrom" layoutX="13.0" layoutY="163.0" prefHeight="26.0" prefWidth="170.0" promptText="Choose Train Station" />
-            <ComboBox fx:id="stationTo" layoutX="13.0" layoutY="239.0" prefHeight="26.0" prefWidth="170.0" promptText="Choose Train Station" />
+            <ComboBox fx:id="stationFrom" layoutX="17.0" layoutY="68.0" prefHeight="26.0" prefWidth="170.0" promptText="Choose Train Station" />
+            <ComboBox fx:id="stationTo" layoutX="17.0" layoutY="144.0" prefHeight="26.0" prefWidth="170.0" promptText="Choose Train Station" />
          </children>
       </AnchorPane>
+      <AnchorPane layoutX="261.0" layoutY="180.0" prefHeight="20.0" prefWidth="600.0" style="-fx-background-color: gray;" />
+      <AnchorPane layoutX="861.0" layoutY="180.0" prefHeight="20.0" prefWidth="600.0" style="-fx-background-color: gray;" />
+      <AnchorPane layoutX="861.0" layoutY="380.0" prefHeight="20.0" prefWidth="600.0" style="-fx-background-color: gray;" />
+      <AnchorPane layoutX="261.0" layoutY="380.0" prefHeight="20.0" prefWidth="600.0" style="-fx-background-color: gray;" />
+      <AnchorPane layoutX="261.0" layoutY="580.0" prefHeight="20.0" prefWidth="600.0" style="-fx-background-color: gray;" />
+      <AnchorPane layoutX="261.0" layoutY="780.0" prefHeight="20.0" prefWidth="600.0" style="-fx-background-color: gray;" />
+      <AnchorPane layoutX="861.0" layoutY="780.0" prefHeight="20.0" prefWidth="600.0" style="-fx-background-color: gray;" />
+      <AnchorPane layoutX="861.0" layoutY="580.0" prefHeight="20.0" prefWidth="600.0" style="-fx-background-color: gray;" />
+      <AnchorPane layoutX="858.0" prefHeight="806.0" prefWidth="5.0" style="-fx-background-color: white;" />
    </children>
 </AnchorPane>
