@@ -1,7 +1,6 @@
-import javafx.animation.PauseTransition;
-import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -13,7 +12,6 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CalTrainController implements Initializable{
 
@@ -94,115 +92,89 @@ public class CalTrainController implements Initializable{
 
     @FXML
     private void deployTrain() {
-        System.out.println("Deploying Train...");
+        System.out.println("Deploying Train");
 
         Image trainImage = new Image("images/train.png");
-        ImageView trainImageView = new ImageView(trainImage);
-        trainImageView.setFitHeight(100);
-        trainImageView.setFitWidth(100);
+        ImageView leftTrainImageView = new ImageView(trainImage);
+        ImageView rightTrainImageView = new ImageView(trainImage);
 
-        ImageView secondTrainImageView = new ImageView(trainImage);
-        secondTrainImageView.setFitHeight(100);
-        secondTrainImageView.setFitWidth(100);
+        background.getChildren().add(leftTrainImageView);
+        leftTrainImageView.setFitHeight(100);
+        leftTrainImageView.setFitWidth(100);
 
-        background.getChildren().add(trainImageView);
-        background.getChildren().add(secondTrainImageView);
+        background.getChildren().add(rightTrainImageView);
+        rightTrainImageView.setFitWidth(100);
+        rightTrainImageView.setFitHeight(100);
 
-        secondTrainImageView.setVisible(false);
+        leftTrainImageView.setX(261);
+        leftTrainImageView.setY(80);
+        rightTrainImageView.setX(861);
+        rightTrainImageView.setY(80);
 
-        trainImageView.setX(261);
-        trainImageView.setY(80);
-        secondTrainImageView.setX(861);
-        secondTrainImageView.setY(80);
+        rightTrainImageView.setVisible(false);
 
-        PauseTransition pt = new PauseTransition(Duration.millis(200));
         TranslateTransition toCenter = new TranslateTransition();
         TranslateTransition toSide = new TranslateTransition();
 
         toCenter.setDuration(Duration.millis(1000));
-        toCenter.setNode(trainImageView);
-        toCenter.setByX(150);
+        toCenter.setNode(leftTrainImageView);
+        toCenter.setByX(200);
 
         toSide.setDuration(Duration.millis(1000));
-        toSide.setNode(trainImageView);
-        toSide.setByX(400);
+        toSide.setNode(leftTrainImageView);
+        toSide.setByX(300);
 
-        SequentialTransition move = new SequentialTransition(toCenter, pt, toSide);
+        TranslateTransition rightToCenter = new TranslateTransition();
+        TranslateTransition rightToSide = new TranslateTransition();
 
-        TranslateTransition toRightCenter = new TranslateTransition();
-        TranslateTransition toRightSide = new TranslateTransition();
+        rightToCenter.setDuration(Duration.millis(1000));
+        rightToCenter.setNode(rightTrainImageView);
+        rightToCenter.setByX(200);
 
-        toRightCenter.setDuration(Duration.millis(1000));
-        toRightCenter.setNode(secondTrainImageView);
-        toRightCenter.setByX(300);
+        rightToSide.setDuration(Duration.millis(1000));
+        rightToSide.setNode(rightTrainImageView);
+        rightToSide.setByX(300);
 
-        toRightSide.setDuration(Duration.millis(1000));
-        toRightSide.setNode(secondTrainImageView);
-        toRightSide.setByX(300);
+        toCenter.play();
+        toCenter.setOnFinished(event -> {
 
-        SequentialTransition secondMove = new SequentialTransition(toRightCenter, pt, toRightSide);
+            // insert checking when a passenger is in the station or if the train is full
+            // else we move to the next station
+            toSide.play();
+        });
 
-        move.play();
-        move.setOnFinished((ActionEvent event) -> {
+        toSide.setOnFinished(event -> {
 
-            if(trainImageView.getY() <= 680) {
-                trainImageView.setX(trainImageView.getX() - 550);
-                trainImageView.setY(trainImageView.getY() + 200);
-                move.play();
-            }
-
-            if(trainImageView.getY() == 880) {
-                trainImageView.setX(-1940);
-                trainImageView.setY(80);
-                move.stop();
-                trainImageView.setVisible(false);
-                secondTrainImageView.setVisible(true);
-                secondMove.play();
+            if(leftTrainImageView.getY() >= 680) {
+                leftTrainImageView.setX(leftTrainImageView.getX() - 500);
+                leftTrainImageView.setY(80);
+                leftTrainImageView.setVisible(false);
+                rightTrainImageView.setVisible(true);
+                rightToCenter.play();
+            } else {
+                leftTrainImageView.setX(leftTrainImageView.getX() - 500);
+                leftTrainImageView.setY(leftTrainImageView.getY() + 200);
+                toCenter.play();
             }
         });
 
-        secondMove.setOnFinished((ActionEvent event) -> {
-
-            if(secondTrainImageView.getY() <= 680) {
-                secondTrainImageView.setX(secondTrainImageView.getX()  - 600);
-                secondTrainImageView.setY(secondTrainImageView.getY() + 200);
-
-                secondMove.play();
-            }
-
-            if(secondTrainImageView.getY() == 880) {
-                System.out.println("Finish Right");
-                trainImageView.setVisible(true);
-                secondTrainImageView.setVisible(false);
-
-                secondTrainImageView.setX(-1537);
-                secondTrainImageView.setY(80);
-
-                secondMove.stop();
-
-                move.play();
-            }
+        rightToCenter.setOnFinished( event -> {
+            rightToSide.play();
         });
 
-//        secondMove.setOnFinished((ActionEvent e) -> {
-//
-//            if(secondTrainImageView.getY() > 480) {
-//                flag[0] = false;
-////                        secondTrainImageView.setVisible(false);
-//                System.out.println("Going back to the left");
-//                trainImageView.setVisible(true);
-//                secondTrainImageView.setX(-1340);
-//                secondTrainImageView.setY(80);
-//
-//
-//            } else {
-//                secondTrainImageView.setX(secondTrainImageView.getX() - 550);
-//                secondTrainImageView.setY(secondTrainImageView.getY() + 200);
-//                secondMove.play();
-//            }
-//
-//
-//        });
+        rightToSide.setOnFinished( event -> {
+            if(rightTrainImageView.getY() >= 680) {
+                rightTrainImageView.setX(rightTrainImageView.getX() - 500);
+                rightTrainImageView.setY(80);
+                rightTrainImageView.setVisible(false);
+                leftTrainImageView.setVisible(true);
+                toCenter.play();
+            } else {
+                rightTrainImageView.setX(rightTrainImageView.getX() - 500);
+                rightTrainImageView.setY(rightTrainImageView.getY() + 200);
+                rightToCenter.play();
+            }
+        });
     }
 
     @Override
