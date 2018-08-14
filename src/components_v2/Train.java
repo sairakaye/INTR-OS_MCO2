@@ -11,6 +11,7 @@ public class Train implements Runnable {
     private Station[] stations;
     private Semaphore semLoadRobot;
     private Thread t; // Change to AnimationTimer to integrate in JavaFX.
+    private TrainController trainController;
 
     public Train(int trainID, Station[] stations, int capacity){
         this.trainID = trainID;
@@ -20,10 +21,16 @@ public class Train implements Runnable {
         this.robots = new ArrayList<>();
         this.semLoadRobot = new Semaphore(1);
         t = new Thread(this);
+        this.trainController = new TrainController(this);
+    }
+
+    public TrainController getTrainController () {
+        return trainController;
     }
 
     @Override
     public synchronized void run() {
+
         while(true){
             boolean isAllowToAccess = false;
             int nextStation = (stationID + 1) % 8;
@@ -33,16 +40,20 @@ public class Train implements Runnable {
 
                 if (isAllowToAccess) {
                     stationID = nextStation;
-                    stations[stationID].setCurrTrain(null);
+                    stations[prevStation].setCurrTrain(null);
                     stations[stationID].setCurrTrain(this);
 
+                    trainController.changeStation(prevStation);
                     for(int i = robots.size() - 1; i >= 0; i--) {
-                        if(robots.get(i).getArrivalStation() == stationID) {
-                            stations[stationID].unloadPassenger();
+                        if(robots.get(i).getArrivalStation() == prevStation) {
+                            stations[prevStation].unloadPassenger();
+                            robots.get(i).setRiding();
                             System.out.println("Robot " + robots.get(i).getId() + " has arrived at Station " + robots.get(i).getArrivalStation());
                             robots.remove(i);
                         }
                     }
+
+                    trainController.moveRight();
                 }
             } finally {
                 if (isAllowToAccess) {
@@ -60,6 +71,12 @@ public class Train implements Runnable {
                         } catch (InterruptedException e){
                             e.printStackTrace();
                         }
+                    }
+                } else{
+                    try{
+                        t.sleep(500);
+                    } catch(InterruptedException e){
+                        e.printStackTrace();
                     }
                 }
             }
@@ -143,5 +160,5 @@ public class Train implements Runnable {
         this.semLoadRobot = semLoadRobot;
     }
 
-    public Thread getThread() { return this.t; }
+    public Thread getThread() { return t; }
 }

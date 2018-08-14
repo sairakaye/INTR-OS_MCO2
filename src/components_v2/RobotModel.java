@@ -2,10 +2,10 @@ package components_v2;
 
 public class RobotModel {
 
-    RobotModel(int id, int departureStation, int arrivalStation) {
+    public RobotModel(int id, int departureStation, int arrivalStation) {
         this.id = id;
-        this.departureStation = departureStation + 1;
-        this.arrivalStation = arrivalStation + 1;
+        this.departureStation = departureStation;
+        this.arrivalStation = arrivalStation;
         this.riding = false;
     }
 
@@ -29,8 +29,8 @@ public class RobotModel {
         return riding;
     }
 
-    public void setRiding(boolean riding) {
-        this.riding = riding;
+    public void setRiding() {
+        riding = !riding;
     }
 
     public int getId(){

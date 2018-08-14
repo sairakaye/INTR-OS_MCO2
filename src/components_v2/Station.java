@@ -23,10 +23,11 @@ public class Station {
         boolean allowed = currTrain.getSemLoadRobot().tryAcquire();
 
         if(allowed){
+            robot.setRiding();
             currTrain.getRobots().add(robot);
             robots.remove(robot);
             currTrain.getSemLoadRobot().release();
-            System.out.println("loaded");
+            System.out.println("Passenger boarded");
             controller.boardPassenger(stationID);
         }
     }
