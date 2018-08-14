@@ -47,7 +47,7 @@ public class Station {
         return currTrain;
     }
 
-    public synchronized void setCurrTrain(Train currTrain) {
+    public void setCurrTrain(Train currTrain) {
         this.currTrain = currTrain;
     }
 

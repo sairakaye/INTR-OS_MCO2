@@ -54,13 +54,13 @@ public class Train implements Runnable {
 
                     stations[prevStation].getSemTrain().release();
 //                    station_load_train(capacity - robots.size());
-//                    if (station_load_train(capacity - robots.size()) == 1){
-//                        try{
-//                            t.sleep(2000);
-//                        } catch (InterruptedException e){
-//                            e.printStackTrace();
-//                        }
-//                    }
+                    if (station_load_train(capacity - robots.size()) == 1){
+                        try{
+                            t.sleep(2000);
+                        } catch (InterruptedException e){
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
         }
