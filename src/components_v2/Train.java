@@ -73,6 +73,12 @@ public class Train implements Runnable {
                         } catch (InterruptedException e){
                             e.printStackTrace();
                         }
+                    } else{
+                        try{
+                            t.sleep(2000);
+                        } catch(InterruptedException e){
+                            e.printStackTrace();
+                        }
                     }
                 } else{
                     try{
@@ -121,6 +127,8 @@ public class Train implements Runnable {
                     i++;
                 }
             }
+
+            return 0;
 //            if(robots.size() < capacity) {
 //                System.out.println("Boarding passengers");
 //            }
