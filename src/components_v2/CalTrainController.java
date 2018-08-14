@@ -118,7 +118,7 @@ public class CalTrainController implements Initializable{
         translateTransition.setOnFinished(event -> {
             RobotModel robot = new RobotModel(roboCounter, Integer.parseInt(temp1[1]) - 1, Integer.parseInt(temp2[1]) - 1);
             System.out.println("Robot has been added to station " + stations[Integer.parseInt(temp1[1]) - 1].getStationID());
-            System.out.println("Robot " + roboCounter + " is now waiting at Station " + stations[Integer.parseInt(temp1[1]) - 1].getStationID());
+            System.out.println("Robot " + roboCounter + " is now waiting at Station " + (stations[Integer.parseInt(temp1[1]) - 1].getStationID()+1));
             roboCounter++;
             stations[Integer.parseInt(temp1[1]) - 1].getRobots().add(robot);
         });
