@@ -101,8 +101,10 @@ public class Train implements Runnable {
 
                 stations[stationID - 1].setCurrTrain(this);
 
-                for (int i = 0; i < stations[stationID - 1].getRobots().size() && i < passengerCount; i++) {
+                int i = 0;
+                while (passengerCount > 0 && stations[stationID - 1].getRobots().size() > 0 && i < stations[stationID - 1].getRobots().size()){
                     stations[stationID - 1].loadPassenger(stations[stationID - 1].getRobots().get(i));
+                    i++;
                 }
             } else{
                 if (stations[stationID].getRobots().size() == 0){
@@ -112,8 +114,10 @@ public class Train implements Runnable {
 
                 stations[stationID - 1].setCurrTrain(this);
 
-                for (int i = 0; i < stations[stationID].getRobots().size() && i < passengerCount; i++){
-                    stations[stationID].loadPassenger(stations[stationID - 1].getRobots().get(i));
+                int i = 0;
+                while (passengerCount > 0 && stations[stationID - 1].getRobots().size() > 0 && i < stations[stationID - 1].getRobots().size()){
+                    stations[stationID].loadPassenger(stations[stationID].getRobots().get(i));
+                    i++;
                 }
             }
 //            if(robots.size() < capacity) {
