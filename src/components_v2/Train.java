@@ -93,13 +93,28 @@ public class Train implements Runnable {
                 return 1;
             }
 
-            if(stations[stationID].getRobots().size() == 0) {
-                System.out.println("[Train " + trainID + "] No passengers at station " + stationID);
-                return 1;
-            }
+            if(stationID > 0) {
+                if (stations[stationID - 1].getRobots().size() == 0) {
+                    System.out.println("[Train " + trainID + "] No passengers at station " + stationID);
+                    return 1;
+                }
 
-            for (int i = 0; i < stations[stationID].getRobots().size() && i < passengerCount; i++) {
-                stations[stationID].loadPassenger(stations[stationID].getRobots().get(i));
+                stations[stationID - 1].setCurrTrain(this);
+
+                for (int i = 0; i < stations[stationID - 1].getRobots().size() && i < passengerCount; i++) {
+                    stations[stationID - 1].loadPassenger(stations[stationID - 1].getRobots().get(i));
+                }
+            } else{
+                if (stations[stationID].getRobots().size() == 0){
+                    System.out.println("[Train " + trainID + "] No passengers at station " + stationID);
+                    return 1;
+                }
+
+                stations[stationID - 1].setCurrTrain(this);
+
+                for (int i = 0; i < stations[stationID].getRobots().size() && i < passengerCount; i++){
+                    stations[stationID].loadPassenger(stations[stationID - 1].getRobots().get(i));
+                }
             }
 //            if(robots.size() < capacity) {
 //                System.out.println("Boarding passengers");

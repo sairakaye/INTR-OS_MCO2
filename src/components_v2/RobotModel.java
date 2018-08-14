@@ -1,7 +1,7 @@
 package components_v2;
 
 public class RobotModel {
-
+    private RobotController controller;
     public RobotModel(int id, int departureStation, int arrivalStation) {
         this.id = id;
         this.departureStation = departureStation;
@@ -45,4 +45,8 @@ public class RobotModel {
     private int departureStation;
     private int arrivalStation;
     private boolean riding;
+
+    public void setController(RobotController robotController) {
+        this.controller = robotController;
+    }
 }

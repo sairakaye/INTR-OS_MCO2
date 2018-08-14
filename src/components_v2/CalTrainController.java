@@ -116,9 +116,11 @@ public class CalTrainController implements Initializable{
 
         translateTransition.play();
         translateTransition.setOnFinished(event -> {
-            RobotModel robot = new RobotModel(roboCounter, Integer.parseInt(temp1[1]) - 1, Integer.parseInt(temp2[1]) - 1);
             System.out.println("Robot has been added to station " + stations[Integer.parseInt(temp1[1]) - 1].getStationID());
             System.out.println("Robot " + roboCounter + " is now waiting at Station " + (stations[Integer.parseInt(temp1[1]) - 1].getStationID()+1));
+            RobotModel robot = new RobotModel(roboCounter, Integer.parseInt(temp1[1]) - 1, Integer.parseInt(temp2[1]) - 1);
+            RobotController controller = new RobotController(robot, roboImageView);
+
             roboCounter++;
             stations[Integer.parseInt(temp1[1]) - 1].getRobots().add(robot);
         });
@@ -150,13 +152,12 @@ public class CalTrainController implements Initializable{
             stations[nCtr] = new Station(nCtr, this);
     }
 
-    public synchronized void boardPassenger(int station){
+    public void boardPassenger(int station){
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setDuration(Duration.millis(1000));
         switch(station)
         {
-            case 0: System.out.println(robo1.get(0));
-                    translateTransition.setNode(robo1.get(0));
+            case 0: translateTransition.setNode(robo1.get(0));
                     translateTransition.setByX(-200);
                     translateTransition.play();
                     translateTransition.setOnFinished(event -> {
@@ -201,7 +202,7 @@ public class CalTrainController implements Initializable{
                     });
                     break;
 
-            case 5: robo6.get(0).setVisible(false);
+            case 5: translateTransition.setNode(robo6.get(0));
                     translateTransition.setByX(-200);
                     translateTransition.play();
                     translateTransition.setOnFinished(event -> {
@@ -210,7 +211,7 @@ public class CalTrainController implements Initializable{
                     });
                     break;
 
-            case 6: robo7.get(0).setVisible(false);
+            case 6: translateTransition.setNode(robo7.get(0));
                     translateTransition.setByX(-200);
                     translateTransition.play();
                     translateTransition.setOnFinished(event -> {
@@ -219,7 +220,7 @@ public class CalTrainController implements Initializable{
                     });
                     break;
 
-            case 7: robo8.get(0).setVisible(false);
+            case 7: translateTransition.setNode(robo8.get(0));
                     translateTransition.setByX(-200);
                     translateTransition.play();
                     translateTransition.setOnFinished(event -> {
@@ -230,7 +231,7 @@ public class CalTrainController implements Initializable{
         }
     }
 
-    public synchronized void disembarkPassenger(int station) {
+    public void disembarkPassenger(int station) {
         TranslateTransition translateTransition = new TranslateTransition();
         Image roboImage = new Image("images/robot.png");
         ImageView roboImageView = new ImageView(roboImage);
