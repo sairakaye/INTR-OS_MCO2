@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1461.0" style="-fx-background-color: #3E454D;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CalTrainController">
+<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1461.0" style="-fx-background-color: #3E454D;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components_v2.CalTrainController">
    <children>
       <ImageView fitHeight="300.0" fitWidth="300.0" layoutX="261.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -152,7 +152,7 @@
                   <Font name="Avenir 85 Heavy" size="14.0" />
                </font>
             </Button>
-            <TextArea layoutX="109.0" layoutY="35.0" prefHeight="38.0" prefWidth="98.0" />
+            <TextArea fx:id="capacity" layoutX="111.0" layoutY="45.0" prefHeight="38.0" prefWidth="98.0" />
             <Label layoutX="19.0" layoutY="64.0" text="CAPACITY">
                <font>
                   <Font name="UniSansHeavyCAPS" size="14.0" />
@@ -195,5 +195,45 @@
       <AnchorPane layoutX="861.0" layoutY="780.0" prefHeight="20.0" prefWidth="600.0" style="-fx-background-color: gray;" />
       <AnchorPane layoutX="861.0" layoutY="580.0" prefHeight="20.0" prefWidth="600.0" style="-fx-background-color: gray;" />
       <AnchorPane layoutX="858.0" prefHeight="806.0" prefWidth="5.0" style="-fx-background-color: white;" />
+      <ImageView fitHeight="35.0" fitWidth="50.0" layoutX="277.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/exit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="35.0" fitWidth="50.0" layoutX="277.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/exit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="35.0" fitWidth="50.0" layoutX="277.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/exit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="35.0" fitWidth="50.0" layoutX="277.0" layoutY="635.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/exit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="35.0" fitWidth="50.0" layoutX="885.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/exit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="35.0" fitWidth="50.0" layoutX="885.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/exit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="35.0" fitWidth="50.0" layoutX="885.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/exit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="35.0" fitWidth="50.0" layoutX="885.0" layoutY="635.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/exit.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

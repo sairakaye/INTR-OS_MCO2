@@ -7,25 +7,23 @@ public class Train implements Runnable {
     private int trainID;
     private int stationID;
     private int capacity;
-    private ArrayList<Robot> robots;
+    private ArrayList<RobotModel> robots;
     private Station[] stations;
-    private CalTrain2 calTrain2;
     private Semaphore semLoadRobot;
     private Thread t; // Change to AnimationTimer to integrate in JavaFX.
 
-    public Train(int trainID, Station[] stations, int capacity, CalTrain2 calTrain2){
+    public Train(int trainID, Station[] stations, int capacity){
         this.trainID = trainID;
         this.stationID = 0;
         this.capacity = capacity;
         this.stations = stations;
-        this.calTrain2 = calTrain2;
         this.robots = new ArrayList<>();
         this.semLoadRobot = new Semaphore(1);
         t = new Thread(this);
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         while(true){
             boolean isAllowToAccess = false;
             int nextStation = (stationID + 1) % 8;
@@ -37,11 +35,11 @@ public class Train implements Runnable {
                     stationID = nextStation;
                     stations[stationID].setCurrTrain(null);
                     stations[stationID].setCurrTrain(this);
-                    calTrain2.StationStatus();
 
-                    for(int i = robots.size() - 1; i >= 0; i--){
-                        if(robots.get(i).getArrivalStation() == stations[stationID]){
-                            calTrain2.gui.RoboOut.append("Robot " + robots.get(i).getRobotID() + " has arrived at " + robots.get(i).getArrivalStation().getStationID() + "\n");
+                    for(int i = robots.size() - 1; i >= 0; i--) {
+                        if(robots.get(i).getArrivalStation() == stationID) {
+                            stations[stationID].unloadPassenger();
+                            System.out.println("Robot " + robots.get(i).getId() + " has arrived at Station " + robots.get(i).getArrivalStation());
                             robots.remove(i);
                         }
                     }
@@ -55,9 +53,37 @@ public class Train implements Runnable {
                     }
 
                     stations[prevStation].getSemTrain().release();
-                    station_load_train(capacity - robots.size());
+//                    station_load_train(capacity - robots.size());
+//                    if (station_load_train(capacity - robots.size()) == 1){
+//                        try{
+//                            t.sleep(2000);
+//                        } catch (InterruptedException e){
+//                            e.printStackTrace();
+//                        }
+//                    }
                 }
             }
+        }
+    }
+
+    public int station_load_train(int passengerCount) {
+        while (true){
+            if(robots.size() == capacity) {
+                System.out.println("The train is full");
+                return 1;
+            }
+
+            if(stations[stationID].getRobots().size() == 0) {
+                System.out.println("No passengers at station " + stationID);
+                return 1;
+            }
+
+            for (int i = 0; i < stations[stationID].getRobots().size(); i++)
+                stations[stationID].loadPassenger(stations[stationID].getRobots().get(i));
+
+//            if(robots.size() < capacity) {
+//                System.out.println("Boarding passengers");
+//            }
         }
     }
 
@@ -65,20 +91,8 @@ public class Train implements Runnable {
         t.start();
     }
 
-    public void station_on_board(Station srcStation, int RobotIndex){
-        calTrain2.gui.RoboOut.append("Train " + trainID + "is at " + (robots.size()) + "capacity\n");
-    }
-
-    public int station_load_train(int passengerCount) {
-        while (true){
-            if(robots.size() == capacity){
-                return 1;
-            }
-
-            if(stations[stationID].getRobots().size() == 0) {
-                return 1;
-            }
-        }
+    public void station_on_board(Station srcStation, int RobotIndex) {
+        System.out.println("Train " + trainID + " is at station " + srcStation.getStationID() + " with " + (capacity - robots.size()) + " seats left");
     }
 
     public int getTrainID() {
@@ -105,11 +119,11 @@ public class Train implements Runnable {
         this.capacity = capacity;
     }
 
-    public ArrayList<Robot> getRobots() {
+    public ArrayList<RobotModel> getRobots() {
         return robots;
     }
 
-    public void setRobots(ArrayList<Robot> robots) {
+    public void setRobots(ArrayList<RobotModel> robots) {
         this.robots = robots;
     }
 
@@ -121,14 +135,6 @@ public class Train implements Runnable {
         this.stations = stations;
     }
 
-    public CalTrain2 getCalTrain2() {
-        return calTrain2;
-    }
-
-    public void setCalTrain2(CalTrain2 calTrain2) {
-        this.calTrain2 = calTrain2;
-    }
-
     public Semaphore getSemLoadRobot() {
         return semLoadRobot;
     }
@@ -136,4 +142,6 @@ public class Train implements Runnable {
     public void setSemLoadRobot(Semaphore semLoadRobot) {
         this.semLoadRobot = semLoadRobot;
     }
+
+    public Thread getThread() { return this.t; }
 }

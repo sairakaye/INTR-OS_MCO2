@@ -6,15 +6,33 @@ import java.util.concurrent.Semaphore;
 public class Station {
     private int stationID;
     private Train currTrain;
-    private ArrayList<Robot> robots = new ArrayList<>();
+    private ArrayList<RobotModel> robots = new ArrayList<>();
     private Semaphore semTrain;
     private Semaphore semRobot;
     private boolean lock = false;
+    private CalTrainController controller;
 
-    public Station(int stationID){
+    public Station(int stationID, CalTrainController controller){
         this.stationID = stationID;
         semTrain = new Semaphore(1);
         semRobot = new Semaphore(1);
+        this.controller = controller;
+    }
+
+    public void loadPassenger(RobotModel robot){
+        boolean allowed = currTrain.getSemLoadRobot().tryAcquire();
+
+        if(allowed){
+            currTrain.getRobots().add(robot);
+            robots.remove(robot);
+            currTrain.getSemLoadRobot().release();
+            System.out.println("loaded");
+            controller.boardPassenger(stationID);
+        }
+    }
+
+    public void unloadPassenger(){
+        controller.disembarkMiddleman(stationID);
     }
 
     public int getStationID() {
@@ -29,15 +47,15 @@ public class Station {
         return currTrain;
     }
 
-    public void setCurrTrain(Train currTrain) {
+    public synchronized void setCurrTrain(Train currTrain) {
         this.currTrain = currTrain;
     }
 
-    public ArrayList<Robot> getRobots() {
+    public ArrayList<RobotModel> getRobots() {
         return robots;
     }
 
-    public void setRobots(ArrayList<Robot> robots) {
+    public void setRobots(ArrayList<RobotModel> robots) {
         this.robots = robots;
     }
 

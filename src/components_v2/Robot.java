@@ -4,14 +4,12 @@ public class Robot implements Runnable {
     private Station departureStation;
     private Station arrivalStation;
     private boolean isOnTrain;
-    private GUI gui;
     private int robotID;
     private Thread t; // Change to AnimationTimer when integrating JavaFX.
 
-    public Robot(Station departureStation, Station desStation, GUI gui, int RobotID){
+    public Robot(Station departureStation, Station desStation, int RobotID){
         this.departureStation = departureStation;
         this.arrivalStation = desStation;
-        this.gui = gui;
         this.robotID = RobotID;
         isOnTrain = false;
         t = new Thread(this);
@@ -31,7 +29,7 @@ public class Robot implements Runnable {
     public int station_wait_for_train() {
         boolean waiting = true;
         while (waiting) {
-            if (isOnTrain && departureStation.getCurrTrain() != null){
+            if (isOnTrain && departureStation.getCurrTrain() != null) {
                 return 1;
             } else {
                 boolean isAllowRobot = false;
@@ -42,8 +40,8 @@ public class Robot implements Runnable {
                         isAllowLoading = departureStation.getCurrTrain().getSemLoadRobot().tryAcquire();
                         System.out.println(isAllowRobot + " - " + isAllowLoading);
                         if (isAllowRobot && isAllowLoading && departureStation.getCurrTrain() != null && departureStation.getCurrTrain().getCapacity() - departureStation.getCurrTrain().getRobots().size() > 0) {
-                            gui.RoboOut.append("Robot " + robotID + " rides the train going to " + arrivalStation.getStationID() + "\n");
-                            departureStation.getCurrTrain().getRobots().add(this);
+                            System.out.println("Robot " + robotID + " rides the train on station " + departureStation.getStationID() + " going to " + arrivalStation.getStationID());
+//                            departureStation.getCurrTrain().getRobots().add(this);
                             departureStation.getRobots().remove(this);
                             departureStation.getCurrTrain().station_on_board(departureStation, departureStation.getRobots().indexOf(this));
                             waiting = false;
@@ -67,7 +65,7 @@ public class Robot implements Runnable {
         try {
             isAllowToAccess = departureStation.getSemRobot().tryAcquire();
             if (isAllowToAccess) {
-                this.departureStation.getRobots().add(this);
+//                this.departureStation.getRobots().add(this);
                 System.out.println(departureStation.getStationID() + "-" + departureStation.getRobots().size());
             }
         } finally {
@@ -75,7 +73,7 @@ public class Robot implements Runnable {
                 this.departureStation.getSemRobot().release();
             }
         }
-        gui.RoboOut.append("Robot " + robotID + " is now at " + departureStation.getStationID() + "\n");
+        System.out.println("Robot " + robotID + " is now at Station " + departureStation.getStationID());
     }
 
     public Station getDepartureStation() {
@@ -100,14 +98,6 @@ public class Robot implements Runnable {
 
     public void setOnTrain(boolean onTrain) {
         isOnTrain = onTrain;
-    }
-
-    public GUI getGui() {
-        return gui;
-    }
-
-    public void setGui(GUI gui) {
-        this.gui = gui;
     }
 
     public int getRobotID() {
