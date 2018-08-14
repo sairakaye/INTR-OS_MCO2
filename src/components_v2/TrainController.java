@@ -15,7 +15,7 @@ public class TrainController {
     private Train model;
     private TranslateTransition movement;
 
-    private static int START_X_LEFT = 261;
+    private static int START_X_LEFT = 251;
     private static int START_Y = 87;
 
     private static int START_X_RIGHT = 855;
