@@ -35,15 +35,17 @@ public class Train implements Runnable {
             boolean isAllowToAccess = false;
             int nextStation = (stationID + 1) % 8;
             int prevStation = stationID;
+            stations[prevStation].setCurrTrain(this);
             try {
                 isAllowToAccess = stations[nextStation].getSemTrain().tryAcquire();
 
                 if (isAllowToAccess) {
                     stationID = nextStation;
-                    stations[prevStation].setCurrTrain(null);
                     stations[stationID].setCurrTrain(this);
 
                     trainController.changeStation(prevStation);
+                    System.out.println("Train " + trainID + " is now at Station " + stationID);
+
                     for(int i = robots.size() - 1; i >= 0; i--) {
                         if(robots.get(i).getArrivalStation() == prevStation) {
                             stations[prevStation].unloadPassenger();
@@ -65,7 +67,7 @@ public class Train implements Runnable {
 
                     stations[prevStation].getSemTrain().release();
 //                    station_load_train(capacity - robots.size());
-                    if (station_load_train(capacity - robots.size()) == 1){
+                    if (station_load_train(capacity - robots.size(), prevStation) == 1){
                         try{
                             t.sleep(2000);
                         } catch (InterruptedException e){
@@ -74,7 +76,7 @@ public class Train implements Runnable {
                     }
                 } else{
                     try{
-                        t.sleep(500);
+                        t.sleep(2000);
                     } catch(InterruptedException e){
                         e.printStackTrace();
                     }
@@ -83,20 +85,23 @@ public class Train implements Runnable {
         }
     }
 
-    public int station_load_train(int passengerCount) {
+    public int station_load_train(int passengerCount, int prev) {
         while (true){
             if(robots.size() == capacity) {
-                System.out.println("The train is full");
+                System.out.println("[Train " + trainID + "] The train is full");
                 return 1;
             }
 
-            if(stations[stationID].getRobots().size() == 0) {
-                System.out.println("No passengers at station " + stationID);
+            if(stations[prev].getRobots().size() == 0) {
+                System.out.println("[Train " + trainID + "] No passengers at station " + stationID);
                 return 1;
             }
 
-            for (int i = 0; i < stations[stationID].getRobots().size(); i++)
-                stations[stationID].loadPassenger(stations[stationID].getRobots().get(i));
+            for (int i = 0; i < stations[prev].getRobots().size() && i < passengerCount; i++) {
+                stations[prev].loadPassenger(stations[prev].getRobots().get(i));
+            }
+            stations[prev].setCurrTrain(null);
+            System.out.println(stations[prev].getCurrTrain());
 
 //            if(robots.size() < capacity) {
 //                System.out.println("Boarding passengers");

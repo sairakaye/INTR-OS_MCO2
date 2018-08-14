@@ -27,7 +27,7 @@ public class Station {
             currTrain.getRobots().add(robot);
             robots.remove(robot);
             currTrain.getSemLoadRobot().release();
-            System.out.println("Passenger boarded");
+            System.out.println("Passenger " + robot.getId() + " has boarded at Station " + robot.getArrivalStation());
             controller.boardPassenger(stationID);
         }
     }
