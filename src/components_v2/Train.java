@@ -35,7 +35,6 @@ public class Train implements Runnable {
             boolean isAllowToAccess = false;
             int nextStation = (stationID + 1) % 8;
             int prevStation = stationID;
-            stations[prevStation].setCurrTrain(this);
             try {
                 isAllowToAccess = stations[nextStation].getSemTrain().tryAcquire();
 
@@ -94,6 +93,7 @@ public class Train implements Runnable {
             }
 
             if(stationID > 0) {
+                System.out.println("if");
                 if (stations[stationID - 1].getRobots().size() == 0) {
                     System.out.println("[Train " + trainID + "] No passengers at station " + stationID);
                     return 1;
@@ -106,17 +106,18 @@ public class Train implements Runnable {
                     stations[stationID - 1].loadPassenger(stations[stationID - 1].getRobots().get(i));
                     i++;
                 }
-            } else{
-                if (stations[stationID].getRobots().size() == 0){
+            } else if (stationID == 0){
+                System.out.println("else if 0");
+                if (stations[7].getRobots().size() == 0){
                     System.out.println("[Train " + trainID + "] No passengers at station " + stationID);
                     return 1;
                 }
 
-                stations[stationID - 1].setCurrTrain(this);
+                stations[7].setCurrTrain(this);
 
                 int i = 0;
-                while (passengerCount > 0 && stations[stationID - 1].getRobots().size() > 0 && i < stations[stationID - 1].getRobots().size()){
-                    stations[stationID].loadPassenger(stations[stationID].getRobots().get(i));
+                while (passengerCount > 0 && stations[7].getRobots().size() > 0 && i < stations[7].getRobots().size()){
+                    stations[7].loadPassenger(stations[7].getRobots().get(i));
                     i++;
                 }
             }
