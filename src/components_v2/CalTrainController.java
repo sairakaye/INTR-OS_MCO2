@@ -65,49 +65,41 @@ public class CalTrainController implements Initializable{
 
         switch(stationF) {
             case "Station 1":
-                System.out.println("Spawning Passenger at Station 1");
                 roboImageView.setX(791);
                 roboImageView.setY(100);
                 robo1.add(roboImageView);
                 break;
             case "Station 2":
-                System.out.println("Spawning Passenger at Station 2");
                 roboImageView.setX(791);
                 roboImageView.setY(300);
                 robo2.add(roboImageView);
                 break;
             case "Station 3":
-                System.out.println("Spawning Passenger at Station 3");
                 roboImageView.setX(791);
                 roboImageView.setY(500);
                 robo3.add(roboImageView);
                 break;
             case "Station 4":
-                System.out.println("Spawning Passenger at Station 4");
                 roboImageView.setX(791);
                 roboImageView.setY(700);
                 robo4.add(roboImageView);
                 break;
             case "Station 5":
-                System.out.println("Spawning Passenger at Station 5");
                 roboImageView.setX(1500);
                 roboImageView.setY(100);
                 robo5.add(roboImageView);
                 break;
             case "Station 6":
-                System.out.println("Spawning Passenger at Station 6");
                 roboImageView.setX(1500);
                 roboImageView.setY(300);
                 robo6.add(roboImageView);
                 break;
             case "Station 7":
-                System.out.println("Spawning Passenger at Station 7");
                 roboImageView.setX(1500);
                 roboImageView.setY(500);
                 robo7.add(roboImageView);
                 break;
             case "Station 8":
-                System.out.println("Spawning Passenger at Station 8");
                 roboImageView.setX(1500);
                 roboImageView.setY(700);
                 robo8.add(roboImageView);
@@ -116,7 +108,6 @@ public class CalTrainController implements Initializable{
 
         translateTransition.play();
         translateTransition.setOnFinished(event -> {
-            System.out.println("Robot has been added to station " + stations[Integer.parseInt(temp1[1]) - 1].getStationID());
             System.out.println("Robot " + roboCounter + " is now waiting at Station " + (stations[Integer.parseInt(temp1[1]) - 1].getStationID()+1));
             RobotModel robot = new RobotModel(roboCounter, Integer.parseInt(temp1[1]) - 1, Integer.parseInt(temp2[1]) - 1);
             RobotController controller = new RobotController(robot, roboImageView);

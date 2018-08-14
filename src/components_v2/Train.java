@@ -22,6 +22,8 @@ public class Train implements Runnable {
         this.semLoadRobot = new Semaphore(1);
         t = new Thread(this);
         this.trainController = new TrainController(this);
+
+        System.out.println("There are " + robots.size() + " robots on the train");
     }
 
     public TrainController getTrainController () {
@@ -107,11 +109,17 @@ public class Train implements Runnable {
 
                 stations[stationID - 1].setCurrTrain(this);
 
-                int i = 0;
-                while (passengerCount > 0 && stations[stationID - 1].getRobots().size() > 0 && i < stations[stationID - 1].getRobots().size()){
-                    stations[stationID - 1].loadPassenger(stations[stationID - 1].getRobots().get(i));
-                    i++;
+                while(capacity - robots.size() > 0 && stations[stationID - 1].getRobots().size() > 0) {
+//                    System.out.println(capacity - robots.size() + " seats left");
+                    stations[stationID - 1].loadPassenger(stations[stationID - 1].getRobots().get(0));
+//                    System.out.println("There are " + robots.size() + " robots on the train");
                 }
+
+//                int i = 0;
+//                while (passengerCount > 0 && stations[stationID - 1].getRobots().size() > 0 && i < stations[stationID - 1].getRobots().size()){
+//                    stations[stationID - 1].loadPassenger(stations[stationID - 1].getRobots().get(i));
+//                    i++;
+//                }
             } else if (stationID == 0){
                 System.out.println("else if 0");
                 if (stations[7].getRobots().size() == 0){
@@ -121,11 +129,17 @@ public class Train implements Runnable {
 
                 stations[7].setCurrTrain(this);
 
-                int i = 0;
-                while (passengerCount > 0 && stations[7].getRobots().size() > 0 && i < stations[7].getRobots().size()){
-                    stations[7].loadPassenger(stations[7].getRobots().get(i));
-                    i++;
+                while(capacity - robots.size() > 0 && stations[7].getRobots().size() > 0) {
+//                    System.out.println(capacity - robots.size() + " seats left");
+                    stations[7].loadPassenger(stations[7].getRobots().get(0));
+//                    System.out.println("There are " + robots.size() + " robots on the train");
                 }
+
+//                int i = 0;
+//                while (passengerCount > 0 && stations[7].getRobots().size() > 0 && i < stations[7].getRobots().size()){
+//                    stations[7].loadPassenger(stations[7].getRobots().get(i));
+//                    i++;
+//                }
             }
 
             return 0;
