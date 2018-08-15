@@ -235,5 +235,11 @@
             <Image url="@images/exit.png" />
          </image>
       </ImageView>
+      <TextArea fx:id="logArea" layoutX="14.0" layoutY="535.0" prefHeight="246.0" prefWidth="222.0" />
+      <Label layoutX="14.0" layoutY="515.0" text="DEPLOYMENT LOG" textFill="WHITE">
+         <font>
+            <Font name="UniSansHeavyCAPS" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

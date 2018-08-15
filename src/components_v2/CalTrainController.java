@@ -27,6 +27,8 @@ public class CalTrainController implements Initializable{
 
     @FXML TextArea capacity;
 
+    @FXML TextArea logArea;
+
     Station[] stations = new Station[8];
     Train trains[] = new Train[16];
     int roboCounter = 1;
@@ -109,6 +111,7 @@ public class CalTrainController implements Initializable{
         translateTransition.play();
         translateTransition.setOnFinished(event -> {
             System.out.println("Robot " + roboCounter + " is now waiting at Station " + (stations[Integer.parseInt(temp1[1]) - 1].getStationID()+1));
+            logArea.appendText("Robot " + roboCounter + " is now waiting at Station " + (stations[Integer.parseInt(temp1[1]) - 1].getStationID()+1) + "\n");
             RobotModel robot = new RobotModel(roboCounter, Integer.parseInt(temp1[1]) - 1, Integer.parseInt(temp2[1]) - 1);
             RobotController controller = new RobotController(robot, roboImageView);
 
@@ -119,7 +122,8 @@ public class CalTrainController implements Initializable{
 
     @FXML
     private void deployTrain() {
-        System.out.println("Deploying Train");
+        System.out.println("Deploying Train " + trainCounter);
+        logArea.appendText("Deploying Train " + trainCounter + "\n");
         String cap = capacity.getText();
         cap = cap.replaceAll("\\s","");
 
